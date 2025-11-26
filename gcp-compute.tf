@@ -1,5 +1,5 @@
 provider "google" {
-  project = "your-project-id"
+  project = "big-unison-479212-i3"
   region  = "us-central1"
   zone    = "us-central1-a"
 }
@@ -48,6 +48,6 @@ resource "google_compute_instance" "web" {
   EOF
 }
 
-output "public_ip" {
+output "public_ip_gcp" {
   value = google_compute_instance.web.network_interface[0].access_config[0].nat_ip
 }

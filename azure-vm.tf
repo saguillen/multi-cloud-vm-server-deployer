@@ -1,5 +1,11 @@
 provider "azurerm" {
-  features {}
+  features {
+    resource_group {
+      prevent_deletion_if_contains_resources = false
+    }
+  }
+  subscription_id = "7c4acb99-ef8d-46cf-93c6-8927781d112e"
+
 }
 
 resource "azurerm_resource_group" "web" {
@@ -76,6 +82,12 @@ resource "azurerm_network_interface_security_group_association" "web" {
   network_security_group_id = azurerm_network_security_group.web.id
 }
 
+resource "tls_private_key" "ssh" {
+  algorithm = "RSA"
+  rsa_bits  = 4096
+}
+
+
 resource "azurerm_linux_virtual_machine" "web" {
   name                = "web-server-azure"
   location            = azurerm_resource_group.web.location
@@ -89,7 +101,7 @@ resource "azurerm_linux_virtual_machine" "web" {
 
   admin_ssh_key {
     username   = "azureuser"
-    public_key = file("~/.ssh/id_rsa.pub")
+    public_key = tls_private_key.ssh.public_key_openssh
   }
 
   os_disk {
@@ -115,6 +127,11 @@ resource "azurerm_linux_virtual_machine" "web" {
   )
 }
 
-output "public_ip" {
+output "public_ip_azure" {
   value = azurerm_public_ip.web.ip_address
+}
+
+output "private_key" {
+  value     = tls_private_key.ssh.private_key_pem
+  sensitive = true
 }
