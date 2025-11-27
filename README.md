@@ -17,12 +17,60 @@ multi-cloud-vm-server-deployer/
 │── README.md
 
 ```
+## (Alternatively) Separate each provider with different folders and independent statuses.
+
+We can also separate each provider into its respective folder and its direct states but calling them from a single command string.
+
+That would require a Project structure. For example:
+
+```
+multi-cloud-vm-server-deployer/
+│── main.tf           
+│── modules/
+│   ├── aws/
+│   ├── azure/
+│   ├── gcp/
+
+```
+
+In `main.tf`:
+
+```
+module "aws" {
+  source = "./modules/aws"
+}
+
+module "azure" {
+  source = "./modules/azure"
+}
+
+module "gcp" {
+  source = "./modules/gcp"
+}
+
+```
+
+Pros
+
+* A single apply creates everything
+
+* one state
+
+* Easier for demos/PoC
+
+Cons
+* If one fails, it can affect the others.
+
+* Not recommended for real environments
+
+
+
+
 # 3. Deployment with Terraform Global commands:
 ```
 terraform init
 terraform plan
 terraform apply
-
 ```
 
 
