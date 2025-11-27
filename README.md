@@ -114,7 +114,7 @@ aws ec2 describe-instances \
 ```
 
 ### Web Server Example (Apache on AWS) 
-![alt text](image.png)
+![aws](./screenshots/image.png)
 
 
 # Azure Deployment (CLI Example)
@@ -158,7 +158,7 @@ runcmd:
 
 ### Nginx Server (Azure)
 
-![alt text](image-2.png)
+![azure](./screenshots/image-2.png)
 
 # GCP Deployment (CLI Example)
 
@@ -191,4 +191,4 @@ gcloud compute instances describe web-server-gcp \
 
 
 ###  Apache Server (GCP)
-![alt text](image-1.png)
+![gcp](./screenshots/image-1.png)
